@@ -15,7 +15,7 @@ export default function IdeaIntroSequence() {
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!section || window.innerWidth <= 760 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const raw = section.querySelector<HTMLElement>(".about-intro__card--raw");
     const process = section.querySelector<HTMLElement>(".about-intro__card--process");
@@ -112,12 +112,23 @@ export default function IdeaIntroSequence() {
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     video.pause();
+    const mobile = window.matchMedia("(max-width: 760px)");
+    const observer = mobile.matches && !reducedMotion.matches
+      ? new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) void video.play().catch(() => undefined);
+          else video.pause();
+        }, { threshold: 0.35 })
+      : null;
+    observer?.observe(video);
     const pauseForReducedMotion = () => {
       if (reducedMotion.matches) video.pause();
     };
 
     reducedMotion.addEventListener("change", pauseForReducedMotion);
-    return () => reducedMotion.removeEventListener("change", pauseForReducedMotion);
+    return () => {
+      observer?.disconnect();
+      reducedMotion.removeEventListener("change", pauseForReducedMotion);
+    };
   }, []);
 
   return (
