@@ -133,47 +133,33 @@ export default function ProductPage() {
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (window.innerWidth <= 760) {
-      const wordSection = root.current?.querySelector<HTMLElement>(".product-words");
-      const wordStage = root.current?.querySelector<HTMLElement>(".product-words__stage");
-      const words = Array.from(root.current?.querySelectorAll<HTMLElement>(".product-words__line") ?? []);
+      const storyItems = [
+        ".product-story__intro",
+        ".product-story__lens-study-wrap",
+        ".product-story__camera-frame",
+        ".product-story__detail--left",
+        ".product-story__detail--right",
+        ".product-story__detail--lower",
+        ".product-story__side-index",
+        ".product-story__prompt",
+      ];
 
-      if (wordSection && wordStage && words.length === 3) {
-        gsap.set(words, { autoAlpha: 0, x: 0, y: 0, scale: 1 });
-        gsap.set(words[0], { autoAlpha: 1 });
-
-        const mobileIntro = gsap.timeline({
+      storyItems.forEach((selector, index) => {
+        const item = root.current?.querySelector<HTMLElement>(selector);
+        if (!item) return;
+        const direction = index % 2 === 0 ? -1 : 1;
+        gsap.fromTo(item, { x: direction * 42, autoAlpha: 0 }, {
+          x: 0,
+          autoAlpha: 1,
+          ease: "power2.out",
           scrollTrigger: {
-            trigger: wordSection,
-            start: "top top+=64px",
-            end: () => `+=${Math.round(window.innerHeight * 0.72)}`,
-            scrub: 0.5,
-            pin: wordStage,
-            anticipatePin: 1,
+            trigger: item,
+            start: "top 88%",
+            end: "top 58%",
+            scrub: 0.45,
             invalidateOnRefresh: true,
           },
         });
-
-        mobileIntro.to(words[0], { x: "-110vw", autoAlpha: 0, duration: 0.24, ease: "power4.in" }, 0.22)
-          .fromTo(words[1], { x: "110vw", autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.28, ease: "expo.out", immediateRender: false }, 0.26)
-          .to(words[1], { y: "100vh", autoAlpha: 0, duration: 0.24, ease: "power4.in" }, 0.61)
-          .fromTo(words[2], { y: "-80vh", autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, 0.65)
-          .to(words[2], { scale: 1.08, autoAlpha: 0, duration: 0.24, ease: "power3.in" }, 1.08);
-      }
-
-      gsap.set(".product-story__lens-study-wrap", { autoAlpha: 0, x: "6vw", y: "1vh", scale: 0.94 });
-      gsap.fromTo(".product-story__lens-study-wrap", { x: "6vw", y: "1vh", scale: 0.94, autoAlpha: 0 }, {
-        x: 0,
-        y: 0,
-        scale: 1,
-        autoAlpha: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".product-story__stage",
-          start: "top 78%",
-          end: "top 38%",
-          scrub: 0.55,
-          invalidateOnRefresh: true,
-        },
       });
       ScrollTrigger.refresh();
       return;

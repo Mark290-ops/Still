@@ -1858,116 +1858,90 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--rust); outline-
   }
   .hero__title-row { align-items: center; }
 
-  /* The About story becomes one uninterrupted column on touch screens. */
-  .about-intro {
-    height: auto;
-    min-height: 0;
-    overflow: visible;
-  }
+  /* Keep the laptop's pinned photo-to-headline sequence on touch screens. */
+  .about-intro { min-height: 1600px; overflow-x: clip; }
   .about-intro__stage {
-    position: relative;
-    top: auto;
-    display: flex;
-    height: auto;
-    min-height: 0;
-    flex-direction: column;
-    overflow: visible;
+    position: sticky;
+    top: 68px;
+    display: block;
+    height: calc(100svh - 68px);
+    min-height: 480px;
+    overflow: hidden;
   }
   .about-intro__cards {
-    position: relative;
-    inset: auto;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
-    padding: 0 22px 28px;
-    overflow: visible;
-    perspective: none;
+    position: absolute;
+    inset: 0;
+    display: block;
+    padding: 0;
+    overflow: hidden;
+    perspective: 1400px;
   }
-  .about-intro__card,
-  .about-intro__card--raw,
-  .about-intro__card--process,
-  .about-intro__card--final {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: 100%;
-    height: auto;
-    min-height: 0;
-    max-height: none;
-    aspect-ratio: 1.55;
-    border-radius: 4px 18px 4px 18px;
-    transform: none;
-    visibility: visible;
-  }
-  .about-intro__caption--process,
-  .about-intro__caption--final { opacity: 1; visibility: visible; }
-  .about-intro__caption { padding: 18px; font-size: clamp(25px, 7vw, 34px); }
   .about-intro__reveal {
-    position: relative;
-    inset: auto;
+    position: absolute;
+    inset: 0;
     min-height: 0;
-    padding: 76px 22px 30px;
-    color: var(--ink);
-    text-align: left;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
+    padding: 24px 22px;
+    color: #fff;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
   }
   .about-intro__reveal h2 {
     max-width: 620px;
-    color: var(--ink);
-    font-size: clamp(45px, 10.5vw, 70px);
+    color: #fff;
+    font-size: clamp(48px, 12vw, 76px);
     line-height: .92;
   }
-  .about-intro__reveal h2 em { color: var(--ink); }
+  .about-intro__reveal h2 em { color: #e6a581; }
   .about-page-layer {
-    position: relative;
-    inset: auto;
-    overflow: visible;
-    opacity: 1;
-    visibility: visible;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
   }
   .about-page-shell {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
     align-items: start;
     gap: 0;
     width: 100%;
-    height: auto;
-    padding: 0 22px 54px;
+    height: 100%;
+    padding: 110px 22px 14px;
   }
   .about-page-content { display: contents; }
-  .about-page-intro { grid-column: 1; grid-row: 1; max-width: 620px; padding: 0 0 25px; }
-  .about-page-intro > p:last-child { font-size: clamp(21px, 5.1vw, 29px); line-height: 1.16; }
+  .about-page-intro { grid-column: 1; grid-row: 1; max-width: 620px; padding: 0 0 14px; }
+  .about-page-intro > p:last-child { font-size: clamp(19px, 4.7vw, 25px); line-height: 1.12; }
   .about-page-media {
     grid-column: 1;
     grid-row: 2;
     width: 100%;
-    height: auto;
-    aspect-ratio: 1.28;
+    height: 100%;
+    min-height: 0;
     margin: 0;
     border-radius: 4px 20px 4px 20px;
   }
   .about-page-media video { position: absolute; inset: 0; }
-  .about-page-media figcaption { right: 18px; bottom: 16px; left: 18px; font-size: 25px; }
+  .about-page-media figcaption { right: 14px; bottom: 12px; left: 14px; font-size: 21px; }
   .about-page-paragraph {
     grid-column: 1;
     grid-row: 3;
     max-width: 620px;
-    margin: 27px 0 30px;
-    font-size: clamp(18px, 4.5vw, 22px);
-    line-height: 1.45;
+    margin: 14px 0 14px;
+    font-size: clamp(15px, 3.8vw, 18px);
+    line-height: 1.28;
   }
   .about-page-stats {
     grid-column: 1;
     grid-row: 4;
     width: 100%;
     margin: 0;
-    padding-top: 18px;
-    gap: 10px;
+    padding-top: 10px;
+    gap: 8px;
   }
-  .about-page-stats strong { font-size: clamp(26px, 7vw, 36px); }
-  .about-page-stats span { font-size: 8px; }
+  .about-page-stats strong { font-size: clamp(23px, 6vw, 31px); }
+  .about-page-stats span { font-size: 7px; }
 
   /* Pin the three words only for their short entrance sequence; the story follows directly. */
   .product-words { height: auto; }
