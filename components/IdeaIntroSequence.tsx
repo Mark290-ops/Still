@@ -15,7 +15,26 @@ export default function IdeaIntroSequence() {
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    if (!section || window.innerWidth <= 760 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.innerWidth <= 760) {
+      const cards = Array.from(section.querySelectorAll<HTMLElement>(".about-intro__card"));
+      const context = gsap.context(() => {
+        cards.forEach((card) => {
+          gsap.fromTo(card, { autoAlpha: 0, y: 18 }, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.48,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+              toggleActions: "play none none reverse",
+            },
+          });
+        });
+      }, section);
+      return () => context.revert();
+    }
 
     const raw = section.querySelector<HTMLElement>(".about-intro__card--raw");
     const process = section.querySelector<HTMLElement>(".about-intro__card--process");

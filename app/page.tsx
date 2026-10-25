@@ -74,11 +74,6 @@ export default function Home() {
           <p className="closing__side-mark">Keep Still</p>
         </div>
         <a href="#top" className="closing__link">Snap back to start <span aria-hidden="true">↑</span></a>
-        <nav className="closing__nav" aria-label="Footer navigation">
-          <a href="#the-idea">The idea</a>
-          <a href="#in-hand">In the hand</a>
-          <a href="#the-moment">The experience</a>
-        </nav>
         <div className="closing__socials" role="group" aria-label="Social media placeholders">
           <span className="closing__social" role="img" aria-label="TikTok placeholder">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 3v11.1a4.1 4.1 0 1 1-3.5-4.05v3.15a1.2 1.2 0 1 0 .5 1V3h3Zm0 0c.4 2.4 1.8 3.8 4.3 4.1v3.1a8.2 8.2 0 0 1-4.3-1.7" /></svg>

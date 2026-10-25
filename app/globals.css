@@ -1826,7 +1826,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--rust); outline-
 }
 
 /* Mobile pass: keep the navigation clear and turn the long desktop spreads into a reading flow. */
-.closing__nav { display: none; }
 
 @media (max-width: 760px) {
   .site-header {
@@ -1857,6 +1856,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--rust); outline-
     margin: 0 20px;
     text-align: right;
   }
+  .hero__title-row { align-items: center; }
 
   /* The About story becomes one uninterrupted column on touch screens. */
   .about-intro {
@@ -1873,7 +1873,35 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--rust); outline-
     flex-direction: column;
     overflow: visible;
   }
-  .about-intro__cards { display: none; }
+  .about-intro__cards {
+    position: relative;
+    inset: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding: 0 22px 28px;
+    overflow: visible;
+    perspective: none;
+  }
+  .about-intro__card,
+  .about-intro__card--raw,
+  .about-intro__card--process,
+  .about-intro__card--final {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 1.55;
+    border-radius: 4px 18px 4px 18px;
+    transform: none;
+    visibility: visible;
+  }
+  .about-intro__caption--process,
+  .about-intro__caption--final { opacity: 1; visibility: visible; }
+  .about-intro__caption { padding: 18px; font-size: clamp(25px, 7vw, 34px); }
   .about-intro__reveal {
     position: relative;
     inset: auto;
@@ -1910,7 +1938,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--rust); outline-
   }
   .about-page-content { display: contents; }
   .about-page-intro { grid-column: 1; grid-row: 1; max-width: 620px; padding: 0 0 25px; }
-  .about-page-intro > p:last-child { font-size: clamp(24px, 6vw, 34px); line-height: 1.12; }
+  .about-page-intro > p:last-child { font-size: clamp(21px, 5.1vw, 29px); line-height: 1.16; }
   .about-page-media {
     grid-column: 1;
     grid-row: 2;
@@ -2068,21 +2096,17 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--rust); outline-
   }
   .product-story__prompt span { display: inline-block; padding-left: 6px; font-style: normal; }
 
-  .closing__nav {
+  .closing { min-height: 0; padding: 56px 22px 38px; }
+  .closing__title-row { align-items: center; }
+  .closing__side-mark { align-self: center; }
+  .closing__socials {
     position: relative;
-    z-index: 1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px 18px;
-    margin-top: 16px;
-    color: rgba(255,255,255,.78);
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: .12em;
-    text-transform: uppercase;
+    right: auto;
+    bottom: auto;
+    justify-content: flex-end;
+    width: fit-content;
+    margin: 18px 0 0 auto;
   }
-  .closing__nav a { padding: 5px 0; }
-  .closing__socials { right: 22px; bottom: 28px; }
 }
 
 @media (max-width: 760px) and (prefers-reduced-motion: reduce) {
