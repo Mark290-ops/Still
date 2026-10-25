@@ -133,6 +133,33 @@ export default function ProductPage() {
   useGSAP(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (window.innerWidth <= 760) {
+      const wordSection = root.current?.querySelector<HTMLElement>(".product-words");
+      const wordStage = root.current?.querySelector<HTMLElement>(".product-words__stage");
+      const words = Array.from(root.current?.querySelectorAll<HTMLElement>(".product-words__line") ?? []);
+
+      if (wordSection && wordStage && words.length === 3) {
+        gsap.set(words, { autoAlpha: 0, x: 0, y: 0, scale: 1 });
+        gsap.set(words[0], { autoAlpha: 1 });
+
+        const mobileIntro = gsap.timeline({
+          scrollTrigger: {
+            trigger: wordSection,
+            start: "top top+=64px",
+            end: () => `+=${Math.round(window.innerHeight * 0.72)}`,
+            scrub: 0.5,
+            pin: wordStage,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        mobileIntro.to(words[0], { x: "-110vw", autoAlpha: 0, duration: 0.24, ease: "power4.in" }, 0.22)
+          .fromTo(words[1], { x: "110vw", autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.28, ease: "expo.out", immediateRender: false }, 0.26)
+          .to(words[1], { y: "100vh", autoAlpha: 0, duration: 0.24, ease: "power4.in" }, 0.61)
+          .fromTo(words[2], { y: "-80vh", autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, 0.65)
+          .to(words[2], { scale: 1.08, autoAlpha: 0, duration: 0.24, ease: "power3.in" }, 1.08);
+      }
+
       const storyItems = [
         ".product-story__intro",
         ".product-story__lens-study-wrap",
